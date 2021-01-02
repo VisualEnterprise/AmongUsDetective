@@ -1,4 +1,7 @@
 # AmongUsDetective
+
+![.NET](https://github.com/VisualEnterprise/AmongUsDetective/workflows/.NET/badge.svg)
+
 Among Us mod to allow one character to be the detective.
 
 This mod must be used with the [Impostor](https://github.com/Impostor/Impostor) custom Among Us server.
