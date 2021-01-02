@@ -42,14 +42,14 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                     await player.Character.SetHatAsync(HatType.CopHat);
                 } else if (isImpostor) {
                     _logger.LogInformation($"- {info.PlayerName} is an impostor.");
-                    await player.Character.SetSkinAsync((uint)temp % 15);
-                    await player.Character.SetHatAsync((uint)temp2 % 93);
+                    await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15);
+                    await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93);
                     await player.Character.SetColorAsync((byte)(temp % 11));
                     await player.Character.SetPetAsync((uint)temp2 % 10);
                 } else {
                     _logger.LogInformation($"- {info.PlayerName} is a crewmate.");
-                    await player.Character.SetSkinAsync((uint)temp % 15);
-                    await player.Character.SetHatAsync((uint)temp2 % 93);
+                    await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15);
+                    await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93);
                     await player.Character.SetColorAsync((byte)(temp % 11));
                     await player.Character.SetPetAsync((uint)temp2 % 10);
                 }
