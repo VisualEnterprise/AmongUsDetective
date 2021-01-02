@@ -28,7 +28,7 @@ namespace cc.ts13.AmongUsDetective.Handlers {
             _logger.LogInformation($"Game is starting.");
             int num = new Random().Next(1, e.Game.PlayerCount) - 1;
             bool det = true;
-            int rand = Convert.ToUInt16(new Random().Next(0, 99)), count = 5, temp = rand, temp2 = rand - count;
+            int rand = Convert.ToUInt16(new Random().Next(0, 99)), count = 3, temp = rand, temp2 = rand - count;
             bool test = true;
             foreach (var player in e.Game.Players) {
                 
@@ -74,7 +74,7 @@ namespace cc.ts13.AmongUsDetective.Handlers {
         }
 
         [EventListener]
-        public void OnPlayerStartMeeting(IPlayerStartMeetingEvent e) {
+        public async void OnPlayerStartMeeting(IPlayerStartMeetingEvent e) {
             _logger.LogInformation($"Player Started Meeting");
             IInnerPlayerControl bMurderer = null;
             if (e.Body != null) {
@@ -84,19 +84,19 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                     // Detective found body
                     switch (new Random().Next(1,4)) {
                         case 1:
-                            _det.SendChatToPlayerAsync($"Murderer was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} suit.");
+                            await _det.SendChatToPlayerAsync($"Murderer was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
                             break;
                         case 2:
-                            _det.SendChatToPlayerAsync($"Murderer was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
+                            await _det.SendChatToPlayerAsync($"Murderer was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
                             break;
                         case 3:
-                            _det.SendChatToPlayerAsync($"Murderer was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
+                            await _det.SendChatToPlayerAsync($"Murderer was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
                             break;
                         case 4:
-                            _det.SendChatToPlayerAsync($"Murderer has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
+                            await _det.SendChatToPlayerAsync($"Murderer has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
                             break;
                         default:
-                            _det.SendChatToPlayerAsync($"Murderer was unable to be detected");
+                            await _det.SendChatToPlayerAsync($"Murderer was unable to be detected");
                             break;
                     }
                 }
@@ -106,37 +106,37 @@ namespace cc.ts13.AmongUsDetective.Handlers {
         private string getSkin(uint id) {
             switch (id) {
                 case (uint)SkinType.Archae:
-                    return "ARCHAE";
+                    return "Archae";
                 case (uint)SkinType.Astro:
-                    return "ASTRO";
+                    return "Astro";
                 case (uint)SkinType.Capt:
-                    return "CAPT";
+                    return "Capt";
                 case (uint)SkinType.Hazmat:
-                    return "HAZMAT";
+                    return "Hazmat";
                 case (uint)SkinType.Mech:
-                    return "MECH";
+                    return "Mech";
                 case (uint)SkinType.Military:
-                    return "MILITARY";
+                    return "Military";
                 case (uint)SkinType.Miner:
-                    return "MINER";
+                    return "Miner";
                 case (uint)SkinType.None:
-                    return "NOTHING";
+                    return "Nothing";
                 case (uint)SkinType.Police:
-                    return "POLICE";
+                    return "Police";
                 case (uint)SkinType.Science:
-                    return "SCIENTIST";
+                    return "Science";
                 case (uint)SkinType.Security:
-                    return "SECURITY";
+                    return "Security";
                 case (uint)SkinType.SuitB:
-                    return "SUITB";
+                    return "SuitB";
                 case (uint)SkinType.SuitW:
-                    return "SUITW";
+                    return "SuitW";
                 case (uint)SkinType.Tarmac:
-                    return "TARMAC";
+                    return "Tarmac";
                 case (uint)SkinType.Wall:
-                    return "WALL";
+                    return "Wall";
                 case (uint)SkinType.Winter:
-                    return "WINTER";
+                    return "Winter";
                 default:
                     return "Unknown";
             }
@@ -147,7 +147,7 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                 case (uint)HatType.Antenna:
                     return "Antenna";
                 case (uint)HatType.Archae:
-                    return "Archae";
+                    return "Archae (Cowboy looking hat)";
                 case (uint)HatType.Astronaut:
                     return "Astronaut";
                 case (uint)HatType.Balloon:
