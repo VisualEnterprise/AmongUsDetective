@@ -13,7 +13,7 @@ namespace cc.ts13.AmongUsDetective {
         package: "cc.ts13.AmongUsDetective",
         name: "AmongUsDetective",
         author: "Siebs",
-        version: "1.0.1")]
+        version: "1.0.2")]
     public class Detective : PluginBase {
 
         private readonly ILogger<Detective> _logger;

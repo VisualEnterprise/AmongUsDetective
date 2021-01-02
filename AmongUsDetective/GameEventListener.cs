@@ -84,19 +84,19 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                     // Detective found body
                     switch (new Random().Next(1,4)) {
                         case 1:
-                            await _det.SendChatToPlayerAsync($"Murderer was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
+                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
                             break;
                         case 2:
-                            await _det.SendChatToPlayerAsync($"Murderer was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
+                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
                             break;
                         case 3:
-                            await _det.SendChatToPlayerAsync($"Murderer was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
+                            await _det.SendChatToPlayerAsync($"Impostor was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
                             break;
                         case 4:
-                            await _det.SendChatToPlayerAsync($"Murderer has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
+                            await _det.SendChatToPlayerAsync($"Impostor has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
                             break;
                         default:
-                            await _det.SendChatToPlayerAsync($"Murderer was unable to be detected");
+                            await _det.SendChatToPlayerAsync($"Impostor was unable to be detected");
                             break;
                     }
                 }
