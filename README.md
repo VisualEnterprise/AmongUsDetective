@@ -1,6 +1,7 @@
 # AmongUsDetective
 
 ![.NET](https://github.com/VisualEnterprise/AmongUsDetective/workflows/.NET/badge.svg)
+[![Release](https://img.shields.io/github/v/release/VisualEnterprise/AmongUsDetective?logo=github&style=flat)](https://github.com/VisualEnterprise/AmongUsDetective/releases)
 
 Among Us mod to allow one character to be the detective.
 
