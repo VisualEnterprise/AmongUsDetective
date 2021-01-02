@@ -6,7 +6,7 @@ This mod must be used with the [Impostor](https://github.com/Impostor/Impostor) 
 ## About
 This mod allows one of the crew to become a detective. You are the detective is you have the police skin and hat on.
 With this mod the detective gains evidence to figure out who the impostor is.
-To gain the evidence the detective must be the one to report the body and in chat they will get a clue as to who the impostor is.
+To gain the evidence the detective must be the one to report the body and in chat they will get a clue as to who the impostor is. Only the detective can see this evidence (The notification may not show so you will need to be proactive and check the chat window).
 
 Some of the evidence that you can recieve is:  
   -Color  
