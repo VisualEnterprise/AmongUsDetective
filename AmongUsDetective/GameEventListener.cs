@@ -87,13 +87,13 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                             _det.SendChatToPlayerAsync($"Murderer was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} suit.");
                             break;
                         case 2:
-                            _det.SendChatToPlayerAsync($"Murderer was wearing {bMurderer.PlayerInfo.HatId} hat.");
+                            _det.SendChatToPlayerAsync($"Murderer was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
                             break;
                         case 3:
-                            _det.SendChatToPlayerAsync($"Murderer was the color {bMurderer.PlayerInfo.ColorId}.");
+                            _det.SendChatToPlayerAsync($"Murderer was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
                             break;
                         case 4:
-                            _det.SendChatToPlayerAsync($"Murderer has {bMurderer.PlayerInfo.PetId} for a pet.");
+                            _det.SendChatToPlayerAsync($"Murderer has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
                             break;
                         default:
                             _det.SendChatToPlayerAsync($"Murderer was unable to be detected");
@@ -155,27 +155,27 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                 case (uint)HatType.Banana:
                     return "Banana";
                 case (uint)HatType.BaseballCap:
-                    return "BaseballCap";
+                    return "Baseball Cap";
                 case (uint)HatType.BatEyes:
-                    return "BatEyes";
+                    return "Bat Eyes";
                 case (uint)HatType.BatWings:
-                    return "BatWings";
+                    return "Bat Wings";
                 case (uint)HatType.Beanie:
                     return "Beanie";
                 case (uint)HatType.Bear:
                     return "Bear";
                 case (uint)HatType.BirdNest:
-                    return "BirdNest";
+                    return "Bird Nest";
                 case (uint)HatType.BlackBelt:
-                    return "BlackBelt";
+                    return "Black Belt";
                 case (uint)HatType.BrainSlug:
-                    return "BrainSlug";
+                    return "Brain Slug";
                 case (uint)HatType.BushHat:
-                    return "BushHat";
+                    return "Bush Hat";
                 case (uint)HatType.Candycanes:
                     return "Candycanes";
                 case (uint)HatType.CaptainsHat:
-                    return "CaptainsHat";
+                    return "Captains Hat";
                 case (uint)HatType.Caution:
                     return "Caution";
                 case (uint)HatType.Cheese:
@@ -187,13 +187,13 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                 case (uint)HatType.CopHat:
                     return "CopHat";
                 case (uint)HatType.Crown:
-                    return "";
-                case (uint)HatType.DoRag:
                     return "Crown";
+                case (uint)HatType.DoRag:
+                    return "Do-Rag";
                 case (uint)HatType.DoubleTopHat:
-                    return "DoubleTopHat";
+                    return "Double Top Hat";
                 case (uint)HatType.DumSticker:
-                    return "DumSticker";
+                    return "Dum Sticker";
                 case (uint)HatType.Egg:
                     return "Egg";
                 case (uint)HatType.ElfHat:
@@ -203,137 +203,197 @@ namespace cc.ts13.AmongUsDetective.Handlers {
                 case (uint)HatType.Fedora:
                     return "Fedora";
                 case (uint)HatType.Fedora2:
-                    return "Fedora2";
+                    return "Fedora";
                 case (uint)HatType.Fez:
                     return "Fez";
                 case (uint)HatType.Flamingo:
                     return "Flamingo";
                 case (uint)HatType.FlowerPin:
-                    return "FlowerPin";
+                    return "Flower Pin";
                 case (uint)HatType.Flowerpot:
                     return "Flowerpot";
                 case (uint)HatType.Fred:
                     return "Fred";
                 case (uint)HatType.GeneralHat:
-                    return "GeneralHat";
+                    return "General Hat";
                 case (uint)HatType.Goggles:
                     return "Goggles";
                 case (uint)HatType.Goggles2:
-                    return "Goggles2";
+                    return "Goggles";
                 case (uint)HatType.GreyThing:
-                    return "GreyThing";
+                    return "Grey Thing";
                 case (uint)HatType.HaloHat:
-                    return "HaloHat";
+                    return "Halo Hat";
                 case (uint)HatType.HardHat:
-                    return "HardHat";
+                    return "Hard Hat";
                 case (uint)HatType.Headphones:
                     return "Headphones";
                 case (uint)HatType.Helmet:
                     return "Helmet";
                 case (uint)HatType.HeroCap:
-                    return "HeroCap";
+                    return "Hero Cap";
                 case (uint)HatType.Horns:
                     return "Horns";
                 case (uint)HatType.HunterCap:
-                    return "HunterCap";
+                    return "Hunter Cap";
                 case (uint)HatType.JungleHat:
-                    return "JungleHat";
+                    return "Jungle Hat";
                 case (uint)HatType.Lights:
                     return "Lights";
                 case (uint)HatType.Machete:
                     return "Machete";
                 case (uint)HatType.MaskHat:
-                    return "";
+                    return "Mask Hat";
                 case (uint)HatType.Military:
-                    return "";
+                    return "Military";
                 case (uint)HatType.MinerCap:
-                    return "";
+                    return "Miner Cap";
                 case (uint)HatType.MiniCrewmate:
-                    return "";
+                    return "Mini Crewmate";
                 case (uint)HatType.Mohawk:
-                    return "";
+                    return "Mohawk";
                 case (uint)HatType.NewYears2018:
-                    return "";
+                    return "New Years 2018";
                 case (uint)HatType.NinjaMask:
-                    return "";
+                    return "Ninja Mask";
                 case (uint)HatType.NoHat:
-                    return "";
+                    return "No Hat";
                 case (uint)HatType.PaperHat:
-                    return "";
+                    return "Paper Hat";
                 case (uint)HatType.PaperMask:
-                    return "";
+                    return "Paper Mask";
                 case (uint)HatType.PartyHat:
-                    return "";
+                    return "Party Hat";
                 case (uint)HatType.PipCap:
-                    return "";
+                    return "Pip Cap";
                 case (uint)HatType.Pirate:
-                    return "";
+                    return "Pirate";
                 case (uint)HatType.Plague:
-                    return "";
+                    return "Plague";
                 case (uint)HatType.Plant:
-                    return "";
+                    return "Plant";
                 case (uint)HatType.PlungerHat:
-                    return "";
+                    return "Plunger Hat";
                 case (uint)HatType.Police:
-                    return "";
+                    return "Police Hat";
                 case (uint)HatType.Present:
-                    return "";
+                    return "Present";
                 case (uint)HatType.Pumpkin:
-                    return "";
+                    return "Pumpkin";
                 case (uint)HatType.RamHorns:
-                    return "";
+                    return "Ram Horns";
                 case (uint)HatType.Reindeer:
-                    return "";
+                    return "Reindeer";
                 case (uint)HatType.Santa:
-                    return "";
+                    return "Santa";
                 case (uint)HatType.ScaryBag:
-                    return "";
+                    return "Scary Bag";
                 case (uint)HatType.ScubaHat:
-                    return "";
+                    return "Scuba Hat";
                 case (uint)HatType.Security:
-                    return "";
+                    return "Security";
                 case (uint)HatType.Snowman:
-                    return "";
+                    return "Snowman";
                 case (uint)HatType.Snowman2:
-                    return "";
+                    return "Snowman";
                 case (uint)HatType.Stethescope:
-                    return "";
+                    return "Stethescope";
                 case (uint)HatType.StickminHat:
-                    return "";
+                    return "Stickmin Hat";
                 case (uint)HatType.StrapHat:
-                    return "";
+                    return "StrapHat";
                 case (uint)HatType.StrawHat:
-                    return "";
+                    return "Straw Hat";
                 case (uint)HatType.TenGallonHat:
-                    return "";
+                    return "Ten Gallon Hat";
                 case (uint)HatType.ThirdEyeHat:
-                    return "";
+                    return "Third Eye Hat";
                 case (uint)HatType.ToiletPaperHat:
-                    return "";
+                    return "Toilet Paper Hat";
                 case (uint)HatType.TopHat:
-                    return "";
+                    return "Top Hat";
                 case (uint)HatType.Toppat:
-                    return "";
+                    return "Toppat";
                 case (uint)HatType.TowelWizard:
-                    return "";
+                    return "Towel Wizard";
                 case (uint)HatType.Tree:
-                    return "";
+                    return "Tree";
                 case (uint)HatType.Ushanka:
-                    return "";
+                    return "Ushanka";
                 case (uint)HatType.Viking:
-                    return "";
+                    return "Viking";
                 case (uint)HatType.WallCap:
-                    return "";
+                    return "Wall Cap";
                 case (uint)HatType.WhiteHat:
-                    return "";
+                    return "White Hat";
                 case (uint)HatType.WinterHat:
-                    return "";
+                    return "Winter Hat";
                 case (uint)HatType.Witch:
-                    return "";
+                    return "Witch";
                 case (uint)HatType.Wolf:
-                    return "";
+                    return "Wolf";
                 default:
-                    return"";
+                    return "Unknown";
+            }
+        }
+
+        private string getColor(byte id) {
+            switch (id) {
+                case (byte)ColorType.Black:
+                    return "Black";
+                case (byte)ColorType.Blue:
+                    return "Blue";
+                case (byte)ColorType.Brown:
+                    return "Brown";
+                case (byte)ColorType.Cyan:
+                    return "Cyan";
+                case (byte)ColorType.Green:
+                    return "Green";
+                case (byte)ColorType.Lime:
+                    return "Lime";
+                case (byte)ColorType.Orange:
+                    return "Orange";
+                case (byte)ColorType.Pink:
+                    return "Pink";
+                case (byte)ColorType.Purple:
+                    return "Purple";
+                case (byte)ColorType.Red:
+                    return "Red";
+                case (byte)ColorType.White:
+                    return "White";
+                case (byte)ColorType.Yellow:
+                    return "Yellow";
+                default:
+                    return "Unknown";
+            }
+        }
+
+        private string getPet(uint id) {
+            switch (id) {
+                case (uint)PetType.Alien:
+                    return "Alien";
+                case (uint)PetType.Bedcrab:
+                    return "Bedcrab";
+                case (uint)PetType.Crewmate:
+                    return "Crewmate";
+                case (uint)PetType.Doggy:
+                    return "Doggy";
+                case (uint)PetType.Ellie:
+                    return "Ellie";
+                case (uint)PetType.Hamster:
+                    return "Hamster";
+                case (uint)PetType.NoPet:
+                    return "NoPet";
+                case (uint)PetType.Robot:
+                    return "Robot";
+                case (uint)PetType.Squig:
+                    return "Squig";
+                case (uint)PetType.Stickmin:
+                    return "Stickmin";
+                case (uint)PetType.Ufo:
+                    return "Ufo";
+                default:
+                    return "Unknown";
             }
         }
 
