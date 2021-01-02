@@ -3,17 +3,15 @@ using Impostor.Api.Events.Managers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using cc.ts13.AmongUsDetective.Handlers;
-using System.Collections.Generic;
-using Impostor.Api.Net.Inner.Objects;
+using org.visualenterprise.AmongUsDetective.Handlers;
 
-namespace cc.ts13.AmongUsDetective {
+namespace org.visualenterprise.AmongUsDetective {
 
     [ImpostorPlugin(
-        package: "cc.ts13.AmongUsDetective",
+        package: "org.visualenterprise.AmongUsDetective",
         name: "AmongUsDetective",
         author: "Siebs",
-        version: "1.0.2")]
+        version: "1.0.3")]
     public class Detective : PluginBase {
 
         private readonly ILogger<Detective> _logger;

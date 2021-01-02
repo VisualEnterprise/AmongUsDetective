@@ -1,16 +1,12 @@
 ﻿using Impostor.Api.Events;
-using Impostor.Api.Events.Meeting;
 using Impostor.Api.Events.Player;
-using Impostor.Api.Net;
 using Impostor.Api.Net.Inner.Objects;
 using Impostor.Api.Innersloth.Customization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace cc.ts13.AmongUsDetective.Handlers {
+namespace org.visualenterprise.AmongUsDetective.Handlers {
     class GameEventListener : IEventListener {
 
         private readonly ILogger<Detective> _logger;
