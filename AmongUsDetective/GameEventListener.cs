@@ -18,20 +18,15 @@ namespace org.visualenterprise.AmongUsDetective.Handlers {
 
         private Dictionary<string, DetectiveGame> _games;
 
-        //private Dictionary<IInnerPlayerControl, IInnerPlayerControl> _kills;
-
-        //private IInnerPlayerControl _det;
-
         public GameEventListener(ILogger<Detective> logger) {
             _logger = logger;
             _games = new Dictionary<string, DetectiveGame>();
-
-            //_kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>();
         }
 
         [EventListener]
         public void OnGameCreated(IGameCreatedEvent e) {
             DetectiveGame game = new DetectiveGame();
+            game.Kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>();
             _games.Add(e.Game.Code, game);
         }
 
