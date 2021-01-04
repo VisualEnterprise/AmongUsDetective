@@ -10,29 +10,45 @@ namespace org.visualenterprise.AmongUsDetective.Handlers {
     class GameEventListener : IEventListener {
 
         private readonly ILogger<Detective> _logger;
-        private Dictionary<IInnerPlayerControl, IInnerPlayerControl> _kills;
 
-        private IInnerPlayerControl _det;
+        private struct DetectiveGame {
+            public Dictionary<IInnerPlayerControl, IInnerPlayerControl> Kills { get; set; }
+            public IInnerPlayerControl Detective { get; set; }
+        }
+
+        private Dictionary<string, DetectiveGame> _games;
+
+        //private Dictionary<IInnerPlayerControl, IInnerPlayerControl> _kills;
+
+        //private IInnerPlayerControl _det;
 
         public GameEventListener(ILogger<Detective> logger) {
             _logger = logger;
-            _kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>();
+            _games = new Dictionary<string, DetectiveGame>();
+
+            //_kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>();
+        }
+
+        [EventListener]
+        public void OnGameCreated(IGameCreatedEvent e) {
+            DetectiveGame game = new DetectiveGame();
+            _games.Add(e.Game.Code, game);
         }
 
         [EventListener]
         public async void OnGameStarted(IGameStartedEvent e) {
             _logger.LogInformation($"Game is starting.");
+            DetectiveGame game = _games[e.Game.Code];
             int num = new Random().Next(1, e.Game.PlayerCount) - 1;
             bool det = true;
             int rand = Convert.ToUInt16(new Random().Next(0, 99)), count = 3, temp = rand, temp2 = rand - count;
             bool test = true;
             foreach (var player in e.Game.Players) {
-                
                 var info = player.Character.PlayerInfo;
                 var isImpostor = info.IsImpostor;
                 if (!isImpostor && num-- <= 0 && det) {
                     det = false;
-                    _det = player.Character;
+                    game.Detective = player.Character;
                     _logger.LogInformation($"- {info.PlayerName} is detective");
                     await player.Character.SetSkinAsync(SkinType.Police);
                     await player.Character.SetHatAsync(HatType.CopHat);
@@ -66,33 +82,34 @@ namespace org.visualenterprise.AmongUsDetective.Handlers {
         [EventListener]
         public void OnPlayerMurder(IPlayerMurderEvent e) {
             _logger.LogInformation($"Player murdered");
-            _kills.Add(e.Victim, e.PlayerControl);
+            DetectiveGame game = _games[e.Game.Code];
+            game.Kills.Add(e.Victim, e.PlayerControl);
         }
 
         [EventListener]
         public async void OnPlayerStartMeeting(IPlayerStartMeetingEvent e) {
             _logger.LogInformation($"Player Started Meeting");
-            IInnerPlayerControl bMurderer = null;
+            DetectiveGame game = _games[e.Game.Code];
             if (e.Body != null) {
-                bMurderer = _kills[e.Body];
+                IInnerPlayerControl bMurderer = game.Kills[e.Body];
 
-                if (e.PlayerControl == _det) {
+                if (e.PlayerControl == game.Detective) {
                     // Detective found body
                     switch (new Random().Next(1,4)) {
                         case 1:
-                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
+                            await game.Detective.SendChatToPlayerAsync($"Impostor was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
                             break;
                         case 2:
-                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
+                            await game.Detective.SendChatToPlayerAsync($"Impostor was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
                             break;
                         case 3:
-                            await _det.SendChatToPlayerAsync($"Impostor was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
+                            await game.Detective.SendChatToPlayerAsync($"Impostor was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
                             break;
                         case 4:
-                            await _det.SendChatToPlayerAsync($"Impostor has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
+                            await game.Detective.SendChatToPlayerAsync($"Impostor has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
                             break;
                         default:
-                            await _det.SendChatToPlayerAsync($"Impostor was unable to be detected");
+                            await game.Detective.SendChatToPlayerAsync($"Impostor was unable to be detected");
                             break;
                     }
                 }
