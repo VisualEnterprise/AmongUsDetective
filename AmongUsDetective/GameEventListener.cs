@@ -5,49 +5,63 @@ using Impostor.Api.Innersloth.Customization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace org.visualenterprise.AmongUsDetective.Handlers {
     class GameEventListener : IEventListener {
 
         private readonly ILogger<Detective> _logger;
-        private Dictionary<IInnerPlayerControl, IInnerPlayerControl> _kills;
 
-        private IInnerPlayerControl _det;
+        private struct DetectiveGame {
+            public Dictionary<IInnerPlayerControl, IInnerPlayerControl> Kills { get; set; }
+            public int DetectiveClientId { get; set; }
+        }
+
+        private Dictionary<string, DetectiveGame> _games;
 
         public GameEventListener(ILogger<Detective> logger) {
             _logger = logger;
-            _kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>();
+            _games = new Dictionary<string, DetectiveGame>();
         }
 
         [EventListener]
-        public async void OnGameStarted(IGameStartedEvent e) {
+        public void OnGameCreated(IGameCreatedEvent e) {
+            DetectiveGame game = new DetectiveGame {
+                Kills = new Dictionary<IInnerPlayerControl, IInnerPlayerControl>(),
+                DetectiveClientId = -1
+            };
+            _games.Add(e.Game.Code, game);
+        }
+
+        [EventListener]
+        public void OnGameStarted(IGameStartedEvent e) {
             _logger.LogInformation($"Game is starting.");
+            DetectiveGame game = _games[e.Game.Code];
             int num = new Random().Next(1, e.Game.PlayerCount) - 1;
             bool det = true;
             int rand = Convert.ToUInt16(new Random().Next(0, 99)), count = 3, temp = rand, temp2 = rand - count;
             bool test = true;
             foreach (var player in e.Game.Players) {
-                
                 var info = player.Character.PlayerInfo;
                 var isImpostor = info.IsImpostor;
                 if (!isImpostor && num-- <= 0 && det) {
                     det = false;
-                    _det = player.Character;
+                    game.DetectiveClientId = player.Client.Id;
                     _logger.LogInformation($"- {info.PlayerName} is detective");
-                    await player.Character.SetSkinAsync(SkinType.Police);
-                    await player.Character.SetHatAsync(HatType.CopHat);
+                    Task.Run(async () => await player.Character.SetSkinAsync(SkinType.Police));
+                    Task.Run(async () => await player.Character.SetHatAsync(HatType.CopHat));
                 } else if (isImpostor) {
                     _logger.LogInformation($"- {info.PlayerName} is an impostor.");
-                    await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15);
-                    await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93);
-                    await player.Character.SetColorAsync((byte)(temp % 11));
-                    await player.Character.SetPetAsync((uint)temp2 % 10);
+                    Task.Run(async () => await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15));
+                    Task.Run(async () => await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93));
+                    Task.Run(async () => await player.Character.SetColorAsync((byte)(temp % 11)));
+                    Task.Run(async () => await player.Character.SetPetAsync((uint)temp2 % 10));
                 } else {
                     _logger.LogInformation($"- {info.PlayerName} is a crewmate.");
-                    await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15);
-                    await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93);
-                    await player.Character.SetColorAsync((byte)(temp % 11));
-                    await player.Character.SetPetAsync((uint)temp2 % 10);
+                    Task.Run(async () => await player.Character.SetSkinAsync((uint)(temp == 5 ? temp + 1 : temp) % 15));
+                    Task.Run(async () => await player.Character.SetHatAsync((uint)(temp2 == 82 ? temp2 + 1 : temp2) % 93));
+                    Task.Run(async () => await player.Character.SetColorAsync((byte)(temp % 11)));
+                    Task.Run(async () => await player.Character.SetPetAsync((uint)temp2 % 10));
                 }
                 if (count-- <= 0) {
                     count = 5;
@@ -61,38 +75,45 @@ namespace org.visualenterprise.AmongUsDetective.Handlers {
                         temp2--;
                 }
             }
+            _games[e.Game.Code] = game;
         }
 
         [EventListener]
         public void OnPlayerMurder(IPlayerMurderEvent e) {
             _logger.LogInformation($"Player murdered");
-            _kills.Add(e.Victim, e.PlayerControl);
+            DetectiveGame game = _games[e.Game.Code];
+            game.Kills.Add(e.Victim, e.PlayerControl);
+            _games[e.Game.Code] = game;
         }
 
         [EventListener]
         public async void OnPlayerStartMeeting(IPlayerStartMeetingEvent e) {
             _logger.LogInformation($"Player Started Meeting");
-            IInnerPlayerControl bMurderer = null;
+            DetectiveGame game = _games[e.Game.Code];
             if (e.Body != null) {
-                bMurderer = _kills[e.Body];
+                _logger.LogInformation($"Body is not null: {e.Body.PlayerInfo.PlayerName}");
+                IInnerPlayerControl bMurderer = game.Kills[e.Body];
+                _logger.LogInformation($"Found murderer: {bMurderer.PlayerInfo.PlayerName}");
 
-                if (e.PlayerControl == _det) {
+                _logger.LogInformation($"Detective: {game.DetectiveClientId}");
+                if (e.ClientPlayer.Client.Id == game.DetectiveClientId) {
+                    _logger.LogInformation($"Detective found body: {e.PlayerControl.PlayerInfo.PlayerName}");
                     // Detective found body
                     switch (new Random().Next(1,4)) {
                         case 1:
-                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
+                            await e.PlayerControl.SendChatToPlayerAsync($"Impostor was wearing {getSkin(bMurderer.PlayerInfo.SkinId)} on their body.");
                             break;
                         case 2:
-                            await _det.SendChatToPlayerAsync($"Impostor was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
+                            await e.PlayerControl.SendChatToPlayerAsync($"Impostor was wearing {getHat(bMurderer.PlayerInfo.HatId)} on their head.");
                             break;
                         case 3:
-                            await _det.SendChatToPlayerAsync($"Impostor was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
+                            await e.PlayerControl.SendChatToPlayerAsync($"Impostor was the color {getColor(bMurderer.PlayerInfo.ColorId)}.");
                             break;
                         case 4:
-                            await _det.SendChatToPlayerAsync($"Impostor has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
+                            await e.PlayerControl.SendChatToPlayerAsync($"Impostor has {getPet(bMurderer.PlayerInfo.PetId)} for a pet.");
                             break;
                         default:
-                            await _det.SendChatToPlayerAsync($"Impostor was unable to be detected");
+                            await e.PlayerControl.SendChatToPlayerAsync($"Impostor was unable to be detected");
                             break;
                     }
                 }
