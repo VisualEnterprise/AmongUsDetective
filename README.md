@@ -26,3 +26,16 @@ If there are multiple impostors you will only gain the evidence for the impostor
 
 ## Instalation
 This dll located in the releases on the right side must installed in the plugins folder of the Impostor server.
+
+## Use
+Once the mod has been installed you can use the chat in the lobby to turn it on or off. The mod starts enabled
+
+> Use `/detective off` to disable the mod
+
+> Use `/detective on` to enable the mod
+
+> Use `/detective randomOutfit` to give Detective a random outfit
+
+> Use `/detective officerOutfit` to give Detective the officer outfit
+
+> Use `/detective help` to get some info on mod

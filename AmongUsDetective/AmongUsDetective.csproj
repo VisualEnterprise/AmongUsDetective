@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>org.visualenterprise.AmongUsDetective</RootNamespace>
-    <Version>1.0.4</Version>
+    <Version>1.1.0</Version>
     <Company>Visual Enterprise</Company>
     <Authors>Siebs</Authors>
   </PropertyGroup>
