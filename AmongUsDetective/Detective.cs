@@ -11,7 +11,7 @@ namespace org.visualenterprise.AmongUsDetective {
         package: "org.visualenterprise.AmongUsDetective",
         name: "AmongUsDetective",
         author: "Siebs",
-        version: "1.0.4")]
+        version: "1.1.0")]
     public class Detective : PluginBase {
 
         private readonly ILogger<Detective> _logger;
